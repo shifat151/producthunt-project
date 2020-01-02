@@ -44,9 +44,11 @@ def upvote(request, product_id):
 def profile(request):
     current_user=request.user
     user_id=str(current_user.id)
+    user_name=str(current_user.username)
+    print(user_name)
     products=Product.objects.filter(hunter__id=user_id)
 
-    return render(request, 'products/profile.html',{'products':products})
+    return render(request, 'products/profile.html',{'products':products,'name':user_name})
 
 
 # Create your views here.
