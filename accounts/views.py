@@ -26,10 +26,13 @@ def login(request):
         user=auth.authenticate(username= request.POST['username'],password=request.POST['password'])
         if user is not None:
             auth.login(request, user)
-            if request.POST['next']:
+            if request.POST['next']=='None':
+                return redirect('home')
+            elif request.POST['next']:
                 return HttpResponseRedirect(request.POST['next'])
             else:
                 redirect('home')
+                
  
         else: 
             return render(request, 'accounts/login.html', {'error':'username or password is incorrect!','next': request.POST['next']})

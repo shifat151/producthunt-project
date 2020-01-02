@@ -4,6 +4,7 @@ from . models import Product
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 
+
 def home(request):
     products=Product.objects
     return render(request, 'products/home.html',{'products': products})
@@ -40,5 +41,12 @@ def upvote(request, product_id):
         product.votes_total+=1
         product.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def profile(request):
+    current_user=request.user
+    user_id=str(current_user.id)
+    products=Product.objects.filter(hunter__id=user_id)
+
+    return render(request, 'products/profile.html',{'products':products})
+
 
 # Create your views here.
