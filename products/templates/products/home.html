@@ -14,6 +14,7 @@
         <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"><button class="btn btn-primary btn-lg btn-lock">
             <span class="oi oi-caret-top"></span> Upvote {{ product.votes_total }}</button></a>
     </div>
+    <input type="hidden" name="next" value="{{  request.GET.next }}" />
 
 </div>
 <form id="upvote{{ product.id }}" action="{% url 'upvote' product.id %}" method="POST">

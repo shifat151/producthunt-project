@@ -6,8 +6,9 @@
 <br>
 <br>
 {% endif %}
-<h1>Login</h1>
-<form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
+<h1>Create Post</h1>
+{% comment %} enctype is for handling image {% endcomment %}
+<form method="post" action="{% url 'create' %}" enctype="multipart/form-data">
     {% csrf_token %}
     Title:
     <br>
@@ -30,9 +31,6 @@
     <input type="file" name="image">
     <br>
     <br>
-
-
-
     <input class="btn btn-primary" type="submit" value="Add Product">
 </form>
 {% endblock %}

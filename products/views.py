@@ -12,13 +12,13 @@ def home(request):
 @login_required(login_url='/accounts/login')
 def create(request):
     if request.method=='POST':
-        if request.POST['title'] and request.POST['body'] and request.POST['url'] and request.FILES['icon'] and request.FILES['image']:
+        if request.POST['title'] and request.POST['body'] and request.POST['url'] and 'icon' in request.FILES and 'image' in request.FILES:
             product=Product()
             product.title=request.POST['title']
             product.body=request.POST['body']
             product.url=request.POST['url']
-            product.icon=request.FILES['icon']
-            product.image=request.FILES['image']
+            product.icon=request.FILES['myfile1']
+            product.image=request.FILES['myfile2']
             product.pub_date=timezone.datetime.now()
             product.hunter=request.user
             product.save()
@@ -26,9 +26,11 @@ def create(request):
  
 
         else:
-            return render(request, 'products/create', {'error':'All fileds are required'}) 
+            return render(request, 'products/create.html', {'error':'All fileds are required'}) 
     else:
         return render(request, 'products/create.html')
+
+        
 @login_required(login_url='/accounts/login')
 def detail(request, product_id):
     product=get_object_or_404(Product, pk=product_id)
@@ -41,6 +43,8 @@ def upvote(request, product_id):
         product.votes_total+=1
         product.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return redirect('home')
 def profile(request):
     current_user=request.user
     user_id=str(current_user.id)
